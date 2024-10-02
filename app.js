@@ -92,9 +92,47 @@ const deleteTour = (req, res) => {
      
 };
 
+const getAllUsers = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        messege: 'this route is not yet defind'
+    })
+};
+
+const createUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        messege: 'this route is not yet defind'
+    })
+};
+
+const getUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        messege: 'this route is not yet defind'
+    })
+};
+
+const updateUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        messege: 'this route is not yet defind'
+    })
+};
+
+const deleteUser = (req, res) => {
+    res.status(500).json({
+        status: 'error',
+        messege: 'this route is not yet defind'
+    })
+};
+
 /// Routing ///
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 app.route('/api/v1/tours/:id').get(getTour).patch(updateTour).delete(deleteTour);
+
+app.route('/api/v1/users').get(getAllUsers).post(createUser);
+app.route('/api/v1/users/:id').get(getUser).patch(updateUser).delete(deleteUser)
 
 /// Port ///
 const port = 3000;
