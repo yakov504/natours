@@ -4,7 +4,37 @@ const Tour = require('./../moduls/tourModul');
 
 exports.getAllTours = async (req, res) => {
     try{
-        const tours = await Tour.find()
+
+        //BUILD QUERY//
+        //1A) Filtering
+        const queryobj = { ...req.query };
+        const excludedFields = ['page', 'sort', 'limit', 'fields'];
+        excludedFields.forEach(el => delete queryobj[el]);
+
+        //1B) Advanced filtering
+        let qeurStr = JSON.stringify(queryobj);
+        qeurStr = qeurStr.replace(/\b(gte|gt|lte)\b/g, match`$ ${match}`);
+        //{di}
+        let query = await Tour.find(queryobj)
+
+        //2) Sorting
+        if(req.query.sort){
+            const sortBy = req.query.sort.split(',').join(' ');
+            query = query.sort(req.query.sort)
+        }else{
+            query = query.sort('-createdAt')
+        }
+
+        //3) Feild limiting
+        if (req.query.feilds){
+            const feilds = req.query.feilds.split(',').jion(' ');
+            query = query.select(feilds)
+        }else {
+           query = query.select('-__v')
+        }
+
+        // EXECUTE QUERY
+        const tours = await query;
         
         res.status(200).json({
                 status:'success',
